@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Abril+Fatface&family=Righteous&family=Space+Grotesk:wght@400;700&family=Calistoga&family=DM+Serif+Display&family=Ubuntu:wght@400;700&family=Roboto:wght@400;700&display=swap');
+    
+    :root {
+      --primary-color: #007766;
+      --font-logo: 'Space Grotesk', sans-serif;
+      --font-title: 'Space Grotesk', sans-serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: white;
+      transition: background-color 0.3s ease;
+      background-color: var(--primary-color);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 5%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .settings {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.8rem 1.2rem;
+      border-radius: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: max-content;
+      max-width: 90vw;
+      backdrop-filter: blur(10px);
+      z-index: 3;
+    }
+
+    .settings-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .settings-label {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    select {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    select option {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      font-family: var(--font-logo);
+    }
+
+    .ai-box {
+      padding: 0.1em 0.3em;
+      color: white;
+      margin-left: 0.1em;
+      border-radius: 0.1em;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+    }
+
+    .hero {
+      max-width: 800px;
+      margin: 8rem auto 0;
+      padding: 0 5%;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+      font-family: var(--font-title);
+    }
+
+    p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      opacity: 0.9;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      font-family: var(--font-body);
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: white;
+      color: var(--primary-color);
+      text-decoration: none;
+      border-radius: 2rem;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .cta:hover {
+      transform: scale(1.05);
+    }
+
+    .symbol-animation {
+      position: fixed;
+      pointer-events: none;
+      color: rgba(255,255,255,0.15);
+      font-size: 2rem;
+      z-index: 1;
+      user-select: none;
+      transition: opacity 1s ease-out;
+      text-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.2); }
+    }
+
+    @media (max-width: 768px) {
+      .settings {
+        padding: 1rem;
+        gap: 0.8rem;
+      }
+      
+      .settings-group {
+        min-width: 200px;
+      }
+
+      .nav {
+        gap: 1rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="settings">
+      <div class="settings-group">
+        <span class="settings-label">Logo:</span>
+        <select id="fontSelect" onchange="updateFont('logo', this.value)">
+          <option value="Space Grotesk">Space Grotesk</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Abril Fatface">Abril Fatface</option>
+          <option value="Righteous">Righteous</option>
+          <option value="Calistoga">Calistoga</option>
+          <option value="DM Serif Display">DM Serif</option>
+          <option value="Ubuntu">Ubuntu</option>
+          <option value="Roboto">Roboto</option>
+        </select>
+      </div>
+      <div class="settings-group">
+        <span class="settings-label">Título:</span>
+        <select id="titleFont" onchange="updateFont('title', this.value)">
+          <option value="Space Grotesk">Space Grotesk</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Abril Fatface">Abril Fatface</option>
+          <option value="Righteous">Righteous</option>
+          <option value="Calistoga">Calistoga</option>
+          <option value="DM Serif Display">DM Serif</option>
+          <option value="Ubuntu">Ubuntu</option>
+          <option value="Roboto">Roboto</option>
+        </select>
+      </div>
+      <div class="settings-group">
+        <span class="settings-label">Texto:</span>
+        <select id="bodyFont" onchange="updateFont('body', this.value)">
+          <option value="Montserrat">Montserrat</option>
+          <option value="Space Grotesk">Space Grotesk</option>
+          <option value="Abril Fatface">Abril Fatface</option>
+          <option value="Righteous">Righteous</option>
+          <option value="Calistoga">Calistoga</option>
+          <option value="DM Serif Display">DM Serif</option>
+          <option value="Ubuntu">Ubuntu</option>
+          <option value="Roboto">Roboto</option>
+        </select>
+      </div>
+      <div class="settings-group">
+        <span class="settings-label">Cor:</span>
+        <select id="colorSelect" onchange="updateColor(this.value)">
+          <option value="#006655">Verde 1</option>
+          <option value="#007766">Verde 2</option>
+          <option value="#008877">Verde 3</option>
+          <option value="#009988">Verde 4</option>
+          <option value="#00aa99">Verde 5</option>
+          <option value="#00bbaa">Verde 6</option>
+          <option value="#0088aa">Azul 1</option>
+          <option value="#0077bb">Azul 2</option>
+          <option value="#0066cc">Azul 3</option>
+          <option value="#0055dd">Azul 4</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="logo">
+      Find<span class="ai-box">AI</span>
+    </div>
+
+    <nav class="nav">
+      <a href="#">A Find</a>
+      <a href="#">Blog</a>
+      <a href="#">Carreiras</a>
+      <a href="#">Contato</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1>Transforme Dados em Ação</h1>
+    <p>A FIND AI oferece soluções avançadas de análise e inteligência de dados que permitem às empresas extrair insights profundos de informações complexas. Com expertise em dados enriquecidos, a FIND capacita negócios a tomar decisões estratégicas mais inteligentes, acelerando o crescimento e conquistando vantagem competitiva.</p>
+    <a href="#" class="cta">Saiba mais</a>
+  </main>
+
+  <script>
+    // Font and color update functions
+    function updateFont(element, font) {
+      switch(element) {
+        case 'logo':
+          document.documentElement.style.setProperty('--font-logo', `'${font}', sans-serif`);
+          break;
+        case 'title':
+          document.documentElement.style.setProperty('--font-title', `'${font}', sans-serif`);
+          break;
+        case 'body':
+          document.documentElement.style.setProperty('--font-body', `'${font}', sans-serif`);
+          break;
+      }
+    }
+
+    function updateColor(color) {
+      document.documentElement.style.setProperty('--primary-color', color);
+      document.body.style.backgroundColor = color;
+    }
+
+    // Healthcare symbols animation
+    const symbols = [
+      '⚕', '🏥', '🚑', '⚖', '+', '❤', '💊', '🔬',
+      '🧬', '⚡', '🧪', '🔋', '📊', '📈', '🎯', '💡'
+    ];
+
+    function random(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function createSymbol() {
+      const symbol = document.createElement('div');
+      symbol.className = 'symbol-animation';
+      
+      const x = random(50, window.innerWidth - 50);
+      const y = random(50, window.innerHeight - 50);
+      
+      symbol.textContent = symbols[random(0, symbols.length - 1)];
+      
+      symbol.style.left = `${x}px`;
+      symbol.style.top = `${y}px`;
+      
+      document.body.appendChild(symbol);
+      
+      requestAnimationFrame(() => {
+        symbol.style.animation = 'fadeInOut 2s ease-in-out';
+      });
+      
+      setTimeout(() => {
+        document.body.removeChild(symbol);
+      }, 2000);
+    }
+
+    function startSymbolAnimation() {
+      createSymbol();
+      setTimeout(startSymbolAnimation, random(800, 2000));
+    }
+
+    // Start animations
+    window.addEventListener('load', () => {
+      for(let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          startSymbolAnimation();
+        }, random(0, 1000));
+      }
+    });
+
+    // Handle visibility changes
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        startSymbolAnimation();
+      }
+    });
+
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const symbols = document.querySelectorAll('.symbol-animation');
+        symbols.forEach(symbol => {
+          symbol.style.left = `${random(50, window.innerWidth - 50)}px`;
+          symbol.style.top = `${random(50, window.innerHeight - 50)}px`;
+        });
+      }, 250);
+    });
+  </script>
+</body>
+</html>
